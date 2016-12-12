@@ -4,6 +4,17 @@
 This directory contains the source files needed to make a Docker image that collects log files from arbitrary files within a container using [Fluentd](http://www.fluentd.org/) and sends them to the cluster's Elasticsearch service.
 The image is designed to be used as a sidecar container as part of a pod.
 It lives in the Google Container Registry under the name `gcr.io/google_containers/fluentd-sidecar-es`.
+this fluentd-sidecar is suitable to collect logs of jetty, whose log include multiline, for example.
+```
+server busy(-100): TCP: 127.0.0.1:48201: ***********************
+	at rule.handler.UserDefinedRuleHandler.handle(UserDefinedRuleHandler.java:122)
+	at rule.engine.RuleEngine.doRule(RuleEngine.java:117)
+	at impl.LocateServiceImpl.handleRequest(LocateServiceImpl.java:162)
+	at impl.LocateServiceImpl.locate(LocateServiceImpl.java:64)
+	at servlet.LocateServlet.handleRequestByRuleName(LocateServlet.java:128)
+```
+
+notice config_generator.sh, it define the format of log.
 
 This shouldn't be necessary if your container writes its logs to stdout or stderr, since the Kubernetes cluster's default logging infrastructure will collect that automatically, but this is useful if your application logs to a specific file in its filesystem and can't easily be changed.
 
