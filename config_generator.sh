@@ -27,10 +27,7 @@ do
   cat > "/etc/td-agent/files/${filename}" << EndOfMessage
 <source>
   type tail
-  format multiline
-  format_firstline /\d{4}-\d{1,2}-\d{1,2}/
-  format1 /^(?<time>[^ ]* [^ ]*) *(?<level>[^ ]*) *\[(?<thread>[^ ].*)\] *\[(?<userspace>[^ ].*)\] - (?<message>[^ ].*)/
-  multiline_flush_interval 3s
+  format none
   time_format %F %T,%L
   path ${filepath}
   read_from_head true
