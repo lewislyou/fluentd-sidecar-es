@@ -19,7 +19,7 @@ if [ -z "$FILES_TO_COLLECT" ]; then
   exit 0
 fi
 
-podnametag=${PODNAME/-/.}
+podnametag=${PODNAME//-/.}
 
 for filepath in $FILES_TO_COLLECT
 do
@@ -27,15 +27,12 @@ do
   cat > "/etc/td-agent/files/${filename}" << EndOfMessage
 <source>
   type tail
-  format multiline
-  format_firstline /\d{4}-\d{1,2}-\d{1,2}/
-  format1 /^(?<time>[^ ]* [^ ]*) *(?<level>[^ ]*) *\[(?<thread>[^ ].*)\] *\[(?<userspace>[^ ].*)\] - (?<message>[^ ].*)/
-  multiline_flush_interval 3s
-  time_format %F %T,%L
+  format /^\[(?<time>[^ ]* [^ ]*)\] *\[(?<process>[^ ].*)\] *\[(?<co>[^ ].*)\] *\|(?<level>[^ ].*)\|(?<file>[^ ].*):(?<line>[^ ].*):\((?<function>[^ ].*)\):(?<message>[^ ].*)/
+  time_format %F %T.%L
   path ${filepath}
   read_from_head true
   pos_file /etc/td-agent/fluentd-es.log.pos
-  tag $podnametag.$PODNAMESPACE.${filename}
+  tag $podnametag.$PODNAMESPACE.${filename//-/.}
 </source>
 EndOfMessage
 done
