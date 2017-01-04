@@ -35,7 +35,7 @@ do
   path ${filepath}
   read_from_head true
   pos_file /etc/td-agent/fluentd-es.log.pos
-  tag $podnametag.$PODNAMESPACE.${filename}
+  tag $podnametag.$PODNAMESPACE.${filename//-/.}
 </source>
 EndOfMessage
 done
