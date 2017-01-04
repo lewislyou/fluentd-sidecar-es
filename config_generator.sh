@@ -27,8 +27,18 @@ do
   cat > "/etc/td-agent/files/${filename}" << EndOfMessage
 <source>
   type tail
+  format multi_format
+  <pattern>
   format /^\[(?<time>[^ ]* [^ ]*)\] *\[(?<process>[^ ].*)\] *\[(?<co>[^ ].*)\] *\|(?<level>[^ ].*)\|(?<file>[^ ].*):(?<line>[^ ].*):\((?<function>[^ ].*)\):(?<message>[^ ].*)/
   time_format %F %T.%L
+  </pattern>
+  <pattern>
+  format /^\[(?<time>[^ ]* [^ ]*)\] *\[(?<process>[^ ].*)\] *\|(?<level>[^ ].*)\|(?<file>[^ ].*):(?<line>[^ ].*):\((?<function>[^ ].*)\):(?<message>[^ ].*)/
+  time_format %F %T.%L
+  </pattern>
+  <pattern>
+  format none
+  </pattern>
   path ${filepath}
   read_from_head true
   pos_file /etc/td-agent/fluentd-es.log.pos

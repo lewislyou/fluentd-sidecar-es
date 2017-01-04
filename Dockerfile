@@ -32,6 +32,7 @@ RUN sed -i -e "s/USER=td-agent/USER=root/" -e "s/GROUP=td-agent/GROUP=root/" /et
 
 # Install the Elasticsearch Fluentd plug-in.
 RUN /usr/sbin/td-agent-gem install fluent-plugin-elasticsearch
+RUN /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-multi-format-parser
 
 # Copy the configuration file generator for creating input configurations for
 # each file specified in the FILES_TO_COLLECT environment variable.
