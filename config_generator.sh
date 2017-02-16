@@ -19,7 +19,7 @@ if [ -z "$FILES_TO_COLLECT" ]; then
   exit 0
 fi
 
-podnametag=${PODNAME/-/.}
+podnametag=${PODNAME//-/.}
 
 for filepath in $FILES_TO_COLLECT
 do
