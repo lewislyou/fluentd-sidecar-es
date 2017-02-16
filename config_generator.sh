@@ -19,7 +19,7 @@ if [ -z "$FILES_TO_COLLECT" ]; then
   exit 0
 fi
 
-podnametag=${PODNAME/-/.}
+podnametag=${PODNAME//-/.}
 
 for filepath in $FILES_TO_COLLECT
 do
@@ -32,7 +32,7 @@ do
   path ${filepath}
   read_from_head true
   pos_file /etc/td-agent/fluentd-es.log.pos
-  tag $podnametag.$PODNAMESPACE.${filename}
+  tag $podnametag.$PODNAMESPACE.${filename//-/.}
 </source>
 EndOfMessage
 done
